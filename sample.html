@@ -1,0 +1,24 @@
+<div id="container"></div>
+<script src="brackettool.js"></script>
+<script>
+let elm_container = document.getElementById("container")
+fetch("../scribe/op12/[12]001.txt")
+.then(async rly => {
+  if (rly.ok) {
+    let src = await rly.text()
+    brackettool(src, ["{","}"], "brackets", "hole", "ul", 30, 30)
+    .then(rly => {
+      elm_container.innerHTML = rly
+    })
+  }
+})
+</script>
+<style>
+#container {
+  max-width: 600px;
+  margin: auto;
+}
+.brackets {
+  color: red;
+}
+</style>
