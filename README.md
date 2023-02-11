@@ -32,3 +32,6 @@
   * "ol" とすると数字付き箇条書き（順序付きリスト）として返します
 * 第 5 引数 beforeNum では第 3 引数で "pickup" を与えた際に抜き出す括弧以前の文字数を与えます
 * 第 6 引数 afterNum では第 3 引数で "pickup" を与えた際に抜き出す括弧以後の文字数を与えます
+
+## CDN
+https://cdn.jsdelivr.net/gh/satsuki-thyme/brackettool.js@main/brackettool.min.js
