@@ -32,13 +32,13 @@
     3. "contents" とすと括弧を削除して括弧に囲われていた部分に以下のマークアップが加えられます
         * <span class="brackets brackets-${i}">
         * ${i} は括弧を与えた順番に付けられる括弧固有の数値で 0 から始まる整数です
-* 第 3 引数 selectMode で "pickup" を与えると括弧の部分を抜き出します。引数を与えないか "hole" を与えると抜き出しを行いません
-* 第 4 引数 outputType には第 3 引数で "pickup" を与えた際のリスト表示のマークアップの種類を与えます。省略することが可能です
+* 第 4 引数 selectMode で "pickup" を与えると括弧の部分を抜き出します。引数を与えないか "hole" を与えると抜き出しを行いません
+* 第 5 引数 outputType には第 4 引数で "pickup" を与えた際のリスト表示のマークアップの種類を与えます。省略することが可能です
     * 引数を与えないか "array" とすると配列として返します
     * "ul" とすると箇条書き（順序なしリスト）として返します
     * "ol" とすると数字付き箇条書き（順序付きリスト）として返します
-* 第 5 引数 beforeNum では第 3 引数で "pickup" を与えた際に抜き出す括弧以前の文字数を与えます
-* 第 6 引数 afterNum では第 3 引数で "pickup" を与えた際に抜き出す括弧以後の文字数を与えます
+* 第 6 引数 beforeNum では第 4 引数で "pickup" を与えた際に抜き出す括弧以前の文字数を与えます
+* 第 7 引数 afterNum では第 4 引数で "pickup" を与えた際に抜き出す括弧以後の文字数を与えます
 
 ## CDN
 https://cdn.jsdelivr.net/gh/satsuki-thyme/brackettool.js@main/brackettool.min.js
