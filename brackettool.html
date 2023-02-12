@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="ja-JP">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>brackettool</title>
+    <link rel="stylesheet" href="../base.css">
+    <link rel="stylesheet" href="../color-scheme-standard.css">
+    <script src="brackettool.js"></script>
+    <style>
+      #container {
+        width: 440px;
+        margin: auto;
+        padding: 50px 0;
+      }
+      .text-box {
+        border-width: 1px;
+        outline: none;
+      }
+      #execute {
+        border-width: 1px;
+      }
+      .vessel + .vessel {
+        margin-top: 25px;
+      }
+      #var-area label + label {
+        margin-left: 10px;
+      }
+      .brackets-input,
+      .num {
+        width: 2em;
+        margin-left: 5px;
+        text-align: center;
+      }
+      #src,
+      #execute {
+        width: 100%;
+        box-sizing: border-box;
+      }
+      #src,
+      #output {
+        font-size: 15px;
+      }
+      #src {
+        padding: 10px;
+      }
+      #output-area {
+        margin-top: 30px;
+      }
+      #output {
+        padding: 10px;
+        border-width: 1px;
+        border-style: solid;
+        box-sizing: border-box;
+      }
+      .brackets {
+        color: #e00;
+      }
+      .input {
+        color: var(--dark-0);
+        background-color: var(--light-1);
+      }
+      .text-box {
+        border-top-color: var(--light--2);
+        border-left-color: var(--light--2);
+      }
+      #execute {
+        border-color: var(--light--2);
+      }
+      #output {
+        border-color: var(--light--2);
+      }
+      @media (prefers-color-scheme: dark) {
+        .input {
+          color: var(--light-0);
+          background-color: var(--dark-1);
+        }
+        .text-box {
+          border-top-color: var(--dark--2);
+          border-left-color: var(--dark--2);
+        }
+        #execute {
+          border-color: var(--dark-1);
+        }
+        #output {
+          border-color: var(--dark-2);
+        }
+      }
+      .light .input {
+        color: var(--dark-0);
+        background-color: var(--light-1);
+      }
+      .light .text-box {
+        border-top-color: var(--light--2);
+        border-left-color: var(--light--2);
+      }
+      .light #execute {
+        border-color: var(--light--2);
+      }
+      .dark .input {
+        color: var(--light-0);
+        background-color: var(--dark-1);
+      }
+      .dark .text-box {
+        border-top-color: var(--dark--2);
+        border-left-color: var(--dark--2);
+      }
+      .dark #execute {
+        border-color: var(--dark-1);
+      }
+    </style>
+    <script>
+      window.addEventListener("DOMContentLoaded", () => {
+        let elm_src = document.querySelector("#src")
+        elm_src.style.height = elm_src.getBoundingClientRect().width * (9 / 16) + "px"
+        let elm_execute = document.querySelector("#execute")
+        let elm_output = document.querySelector("#output")
+        elm_output.style.height = elm_output.getBoundingClientRect().width * (9 / 16) + "px"
+        let elm_bracketsBefore = document.querySelector("#brackets-before")
+        let elm_bracketsAfter = document.querySelector("#brackets-after")
+        let elm_procType = document.querySelector("#proc-type")
+        let elm_selectMode = document.querySelector("#select-mode")
+        let elm_outputType = document.querySelector("#output-type")
+        let elm_beforeNum = document.querySelector("#before-num")
+        let elm_afterNum = document.querySelector("#after-num")
+        elm_execute.onclick = () => {
+          src = elm_src.value
+          brackets = [elm_bracketsBefore.value, elm_bracketsAfter.value]
+          procType = elm_procType.value
+          selectMode = elm_selectMode.value
+          outputType = elm_outputType.value
+          beforeNum = elm_beforeNum.value
+          afterNum = elm_afterNum.value
+          brackettool(src, brackets, procType, selectMode, outputType, beforeNum, afterNum)
+          .then(rly => {
+            elm_output.innerHTML = rly
+          })
+        }
+      })
+    </script>
+  </head>
+  <body>
+    <div id="container">
+      <div id="var-area">
+        <div class="vessel">
+          <label>前括弧<input type="text" id="brackets-before" class="input text-box brackets-input" value="「"></label>
+          <label>後括弧<input type="text" id="brackets-after" class="input text-box brackets-input" value="」"></label>
+          <label>括弧の扱い
+            <select id="proc-type" class="input select">
+              <option value="brackets">括弧を強調</option>
+              <option value="contens">削除して中身を強調</option>
+              <option value="delete">削除</option>
+            </select>
+          </label>
+        </div>
+        <div class="vessel">
+          <label>表示方法
+            <select id="select-mode" class="input select">
+              <option value="hole">通常表示</option>
+              <option value="pickup">ピックアップ</option>
+            </select>
+          </label>
+          <label>箇条書きタイプ
+            <select id="output-type" class="input select">
+              <option value="ul">数字なし箇条書き</option>
+              <option value="ol">数字あり箇条書き</option>
+            </select>
+          </label>
+        </div>
+        <div class="vessel">
+          <label>括弧前の文字数<input type="text" id="before-num" class="input text-box num" value="30"></label>
+          <label>括弧後の文字数<input type="text" id="after-num" class="input text-box num" value="30"></label>
+        </div>
+        <div class="vessel">
+          <label>対象の文章<br>
+          <textarea id="src" class="input"></textarea></label><br>
+          <input type="button" id="execute" class="input" value="処理を実行">
+        </div>
+      </div>
+      <div id="output-area">
+        <div id="output">出力エリア</div>
+      </div>
+    </div>
+  </body>
+</html>
